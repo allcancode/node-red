@@ -40,8 +40,11 @@ module.exports = function(grunt) {
     if (nonHeadless) {
         process.env.NODE_RED_NON_HEADLESS = true;
     }
+    let packageFile = grunt.file.readJSON('package.json')
+    process.env.NODE_RED_PACKAGE_VERSION = packageFile.version;
+
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: packageFile,
         paths: {
             dist: ".dist"
         },
@@ -142,6 +145,7 @@ module.exports = function(grunt) {
                     "packages/node_modules/@node-red/editor-client/src/js/text/bidi.js",
                     "packages/node_modules/@node-red/editor-client/src/js/text/format.js",
                     "packages/node_modules/@node-red/editor-client/src/js/ui/state.js",
+                    "packages/node_modules/@node-red/editor-client/src/js/plugins.js",
                     "packages/node_modules/@node-red/editor-client/src/js/nodes.js",
                     "packages/node_modules/@node-red/editor-client/src/js/font-awesome.js",
                     "packages/node_modules/@node-red/editor-client/src/js/history.js",
@@ -461,11 +465,13 @@ module.exports = function(grunt) {
                     'packages/node_modules/@node-red/runtime/lib/hooks.js',
                     'packages/node_modules/@node-red/util/**/*.js',
                     'packages/node_modules/@node-red/editor-api/lib/index.js',
-                    'packages/node_modules/@node-red/editor-api/lib/auth/index.js'
+                    'packages/node_modules/@node-red/editor-api/lib/auth/index.js',
+                    'packages/node_modules/@node-red/registry/lib/index.js'
                 ],
                 options: {
                     destination: 'docs',
-                    configure: './jsdoc.json'
+                    configure: './jsdoc.json',
+                    fred: "hi there"
                 }
             },
             _editor: {
